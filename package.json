@@ -1,0 +1,27 @@
+{
+  "name": "valorant-armory",
+  "version": "1.0.0",
+  "description": "Explore, search, and filter through the collection of Valorant weapon skins using an intuitive web interface",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AravindDasarathy/valorant-armory.git"
+  },
+  "author": "Aravind Dasarathy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AravindDasarathy/valorant-armory/issues"
+  },
+  "homepage": "https://github.com/AravindDasarathy/valorant-armory#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.19.1"
+  }
+}
