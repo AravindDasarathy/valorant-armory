@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs') %>
+    <title>Weapons List</title>
+  </head>
+  <body>
+    <div class="bg-image"></div>
+    <div class="container">
+      <h1 class="text-center gallery-title">Weapons Gallery</h1>
+      <div class="row row-eq-height">
+        <% weapons.forEach(weapon => { %>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <img
+              class="card-img-top"
+              src="<%= weapon.image %>"
+              alt="<%= weapon.name %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= weapon.name %></h5>
+              <!-- Add more weapon details here if needed -->
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
