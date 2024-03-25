@@ -8,10 +8,10 @@
     <div class="bg-image"></div>
     <div class="container">
       <h1 class="text-center gallery-title">Weapons Gallery</h1>
-      <div class="row row-eq-height">
+      <div class="row">
         <% weapons.forEach(weapon => { %>
         <div class="col-md-3">
-          <div class="card text-center">
+          <div class="card text-center weapon-card" data-weapon-name="<%= weapon.name %>">
             <img
               class="card-img-top"
               src="<%= weapon.image %>"
@@ -19,7 +19,6 @@
             />
             <div class="card-body">
               <h5 class="card-title"><%= weapon.name %></h5>
-              <!-- Add more weapon details here if needed -->
             </div>
           </div>
         </div>
