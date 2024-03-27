@@ -14,7 +14,6 @@ $(document).ready(function () {
     $.ajax({
       url: `http://localhost:8080/skins/${skinId}`,
       success: function (skinDetails) {
-        console.log('incoming skin details', skinDetails);
         populateVariantsModal(skinDetails);
         $('#variantsModal').modal('show');
       },
@@ -24,16 +23,15 @@ $(document).ready(function () {
     });
   });
 
-  $(".close-modal-button").click(function () {
+  $('.close-modal-button').click(function () {
     $('#variantsModal').modal('hide');
   });
 
   $('#variantsModal').on('hide.bs.modal', function () {
     $('video', this).each(function () {
-        this.pause();
+      this.pause();
     });
   });
-
 });
 
 function populateVariantsModal(skin) {
@@ -44,19 +42,20 @@ function populateVariantsModal(skin) {
   <div class="d-flex justify-content-center mb-3">`;
 
   // Populate swatches
-  skin.chromas.forEach(chroma => {
-      modalContent += `
-          <img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1" style="width: 50px; cursor: pointer;" onclick="updateViewBoxWithFullRender('${chroma.fullRender}')">`;
+  skin.chromas.forEach((chroma) => {
+    modalContent += `
+      <img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1" style="width: 50px; cursor: pointer;" onclick="updateViewBoxWithFullRender('${chroma.fullRender}')">`;
   });
 
   modalContent += `</div><div class="d-flex flex-column align-items-center">`;
 
   // Populate levels
   skin.levels.forEach((level, index) => {
-      modalContent += `
-          <button class="btn btn-primary my-1 level-button" onclick="playLevelVideo('${level.streamedVideo}', '${level.displayName}')">
-              Level ${index + 1}
-          </button>`;
+    modalContent += `
+      <button class="btn btn-primary my-1 level-button"
+        onclick="playLevelVideo('${level.streamedVideo}', '${level.displayName}')">
+        Level ${index + 1}
+      </button>`;
   });
 
   adjustLevelButtonsWidth();
@@ -71,19 +70,19 @@ function updateViewBoxWithFullRender(fullRenderUrl) {
 
 function playLevelVideo(videoUrl, displayName) {
   if (videoUrl) {
-      $('.view-box').html(`
-          <video controls autoplay class="img-fluid">
-              <source src="${videoUrl}" type="video/mp4">
-              Your browser does not support the video tag.
-          </video>
-          <div class="mt-2">${displayName}</div>
-      `);
+    $('.view-box').html(`
+      <video controls autoplay class="img-fluid">
+        <source src="${videoUrl}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="mt-2">${displayName}</div>
+    `);
   } else {
-      alert('Video not available for this level.');
+    alert('Video not available for this level.');
   }
 }
 
 function adjustLevelButtonsWidth() {
-  const swatchTotalWidth = ($('.chroma-item').length * (30 + 10));
+  const swatchTotalWidth = $('.chroma-item').length * (30 + 10);
   $('.level-button').css('width', swatchTotalWidth + 'px');
 }

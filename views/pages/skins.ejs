@@ -1,70 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <%- include('../partials/head.ejs') %>
-    <title>Weapons List</title>
+      <title>Weapons List</title>
   </head>
+
   <body>
     <div class="bg-image"></div>
     <div class="container">
-      <h1 class="text-center gallery-title"><%= weapon_name %> Skins</h1>
+      <h1 class="text-center gallery-title">
+        <%= weapon_name %> Skins
+      </h1>
       <div class="row">
-        <% skins.forEach(skin => { %>
-        <div class="col-md-4 mb-4">
-          <div class="skin-card card">
-            <img
-              src="<%= skin.displayIcon %>"
-              alt="<%= skin.displayName %>"
-              class="card-img-top"
-            />
-            <div class="card-body text-center">
-              <h5 class="card-title"><%= skin.displayName %></h5>
-              <button
-                type="button"
-                class="btn btn-primary view-variants-btn"
-                data-skin-id="<%= skin.uuid %>"
-                data-toggle="modal"
-                data-target="#variantsModal"
-              >
-                View Variants
-              </button>
+        <% skins.forEach(skin=> { %>
+          <div class="col-md-4 mb-4">
+            <div class="skin-card card">
+              <img src="<%= skin.displayIcon %>" alt="<%= skin.displayName %>" class="card-img-top" />
+              <div class="card-body text-center">
+                <h5 class="card-title">
+                  <%= skin.displayName %>
+                </h5>
+                <button type="button" class="btn btn-primary view-variants-btn" data-skin-id="<%= skin.uuid %>"
+                  data-toggle="modal" data-target="#variantsModal">
+                  View Variants
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <% }); %>
+          <% }); %>
       </div>
 
       <nav aria-label="Skins navigation">
         <ul class="pagination justify-content-center">
-          <% if (currentPage > 1) { %>
-          <li class="page-item">
-            <a
-              class="page-link"
-              href="/skins?weapon_name=<%= weapon_name %>&page=<%= currentPage - 1 %>"
-              aria-label="Previous"
-            >
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <% } %> <% for(let i = 1; i <= totalPages; i++) { %>
-          <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-            <a
-              class="page-link"
-              href="/skins?weapon_name=<%= weapon_name %>&page=<%= i %>"
-              ><%= i %></a
-            >
-          </li>
-          <% } %> <% if (currentPage < totalPages) { %>
-          <li class="page-item">
-            <a
-              class="page-link"
-              href="/skins?weapon_name=<%= weapon_name %>&page=<%= currentPage + 1 %>"
-              aria-label="Next"
-            >
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-          <% } %>
+          <% if (currentPage> 1) { %>
+            <li class="page-item">
+              <a class="page-link" href="/skins?weapon_name=<%= weapon_name %>&page=<%= currentPage - 1 %>"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <% } %>
+              <% for(let i=1; i <=totalPages; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                  <a class="page-link" href="/skins?weapon_name=<%= weapon_name %>&page=<%= i %>">
+                    <%= i %>
+                  </a>
+                </li>
+                <% } %>
+                  <% if (currentPage < totalPages) { %>
+                    <li class="page-item">
+                      <a class="page-link" href="/skins?weapon_name=<%= weapon_name %>&page=<%= currentPage + 1 %>"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    <% } %>
         </ul>
       </nav>
     </div>
@@ -89,4 +80,5 @@
     <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="/js/main.js"></script>
   </body>
+
 </html>

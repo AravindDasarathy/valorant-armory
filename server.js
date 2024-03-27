@@ -17,20 +17,24 @@ app.get('/', (req, res) => res.render('pages/index'));
 
 app.get('/weapons', async (req, res) => {
   const weapons = await axios.get('https://valorant-api.com/v1/weapons');
-  const weaponsList = weapons.data.data.map(weapon => ({
+  const weaponsList = weapons.data.data.map((weapon) => ({
     name: weapon.displayName,
-    image: weapon.displayIcon
+    image: weapon.displayIcon,
   }));
 
-  res.render('pages/weapons', { weapons: weaponsList })
+  res.render('pages/weapons', { weapons: weaponsList });
 });
 
 app.get('/skins', async (req, res) => {
   const weaponName = req.query.weapon_name;
   const weapons = await axios.get('https://valorant-api.com/v1/weapons');
-  const weapon = weapons.data.data.find(weapon => weapon.displayName.toLowerCase() === weaponName.toLowerCase());
+  const weapon = weapons.data.data.find(
+    (weapon) => weapon.displayName.toLowerCase() === weaponName.toLowerCase()
+  );
   const skinsToExclude = [`Standard ${weaponName}`, 'Random Favorite Skin'];
-  const filteredSkins = weapon.skins.filter(skin => !skinsToExclude.includes(skin.displayName));
+  const filteredSkins = weapon.skins.filter(
+    (skin) => !skinsToExclude.includes(skin.displayName)
+  );
 
   const page = parseInt(req.query.page) || 1;
   const pageSize = 12;
@@ -42,13 +46,15 @@ app.get('/skins', async (req, res) => {
     weapon_name: weaponName,
     currentPage: page,
     totalPages: totalPages,
-    skins: paginatedSkins
+    skins: paginatedSkins,
   });
 });
 
 app.get('/skins/:skin_id', async (req, res) => {
   const skinId = req.params.skin_id;
-  const skin = await axios.get(`https://valorant-api.com/v1/weapons/skins/${skinId}`);
+  const skin = await axios.get(
+    `https://valorant-api.com/v1/weapons/skins/${skinId}`
+  );
   const skinData = skin?.data?.data;
 
   if (!skinData) {
