@@ -46,5 +46,17 @@ app.get('/skins', async (req, res) => {
   });
 });
 
+app.get('/skins/:skin_id', async (req, res) => {
+  const skinId = req.params.skin_id;
+  const skin = await axios.get(`https://valorant-api.com/v1/weapons/skins/${skinId}`);
+  const skinData = skin?.data?.data;
+
+  if (!skinData) {
+    return res.status(404).send('Skin not found');
+  }
+
+  res.status(200).json(skinData);
+});
+
 app.listen(PORT);
 console.log(`Server is listening on port ${PORT}`);
