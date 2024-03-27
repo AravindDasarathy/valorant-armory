@@ -21,15 +21,12 @@
               <h5 class="card-title"><%= skin.displayName %></h5>
               <button
                 type="button"
-                class="btn btn-primary view-chromas-btn"
+                class="btn btn-primary view-variants-btn"
+                data-skin-id="<%= skin.uuid %>"
+                data-toggle="modal"
+                data-target="#variantsModal"
               >
-                View Chromas
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary view-levels-btn"
-              >
-                View Levels
+                View Variants
               </button>
             </div>
           </div>
@@ -49,26 +46,44 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <% } %>
-          <% for(let i = 1; i <= totalPages; i++) { %>
-            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-              <a class="page-link" href="/skins?weapon_name=<%= weapon_name %>&page=<%= i %>"><%= i %></a>
-            </li>
-          <% } %>
-          <% if (currentPage < totalPages) { %>
-            <li class="page-item">
-              <a
-                class="page-link"
-                href="/skins?weapon_name=<%= weapon_name %>&page=<%= currentPage + 1 %>"
-                aria-label="Next"
-              >
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+          <% } %> <% for(let i = 1; i <= totalPages; i++) { %>
+          <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+            <a
+              class="page-link"
+              href="/skins?weapon_name=<%= weapon_name %>&page=<%= i %>"
+              ><%= i %></a
+            >
+          </li>
+          <% } %> <% if (currentPage < totalPages) { %>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/skins?weapon_name=<%= weapon_name %>&page=<%= currentPage + 1 %>"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
           <% } %>
         </ul>
       </nav>
     </div>
+
+    <div class="modal fade" id="variantsModal" tabindex="-1" aria-labelledby="variantsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="variantsModalLabel">Skin Variants</h5>
+            <button type="button" class="close-modal-button" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-3.7.1.min.js"></script>

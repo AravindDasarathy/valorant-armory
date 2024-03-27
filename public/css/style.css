@@ -66,3 +66,22 @@ html, body {
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
+
+.modal-header .close {
+  margin: -1rem -1rem -1rem auto;
+}
+
+.chroma-item img {
+  width: 30px;
+}
+
+.modal-header {
+  position: relative;
+}
+
+.close-modal-button {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  z-index: 2;
+}
