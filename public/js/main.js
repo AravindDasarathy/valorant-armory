@@ -42,14 +42,15 @@ $(document).ready(function () {
 
 function populateVariantsModal(skin) {
   let modalContent = `
-  <div class="view-box text-center mb-3">
-      <img src="${skin.displayIcon}" class="img-fluid" alt="${skin.displayName}">
-  </div>
-  <div class="d-flex justify-content-center mb-3">`;
+    <div class="view-box text-center mb-3">
+        <img src="${skin.displayIcon}" class="img-fluid" alt="${skin.displayName}">
+    </div>
+    <div class="d-flex justify-content-center mb-3">
+  `;
 
   // Populate swatches
   skin.chromas.forEach((chroma) => {
-    if (chroma.swatch) {
+    if (chroma.swatch && chroma.fullRender) {
       modalContent += `
         <img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1" style="width: 50px; cursor: pointer;" onclick="updateViewBoxWithFullRender('${chroma.fullRender}')">`;
     }
@@ -59,16 +60,14 @@ function populateVariantsModal(skin) {
 
   // Populate levels
   skin.levels.forEach((level, index) => {
-    modalContent += `
+    if (level.streamedVideo) {
+      modalContent += `
       <button class="btn btn-primary my-1 level-button"
-        onclick="playLevelVideo('${level.streamedVideo}', '${
-      level.displayName
-    }')">
+        onclick="playLevelVideo('${level.streamedVideo}', '${level.displayName}')">
         Level ${index + 1}
       </button>`;
+    }
   });
-
-  adjustLevelButtonsWidth();
 
   modalContent += `</div>`;
   $('#variantsModal .modal-body').html(modalContent);
@@ -81,20 +80,11 @@ function updateViewBoxWithFullRender(fullRenderUrl) {
 }
 
 function playLevelVideo(videoUrl, displayName) {
-  if (videoUrl) {
-    $('.view-box').html(`
-      <video controls autoplay class="img-fluid">
-        <source src="${videoUrl}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="mt-2">${displayName}</div>
-    `);
-  } else {
-    alert('Video not available for this level.');
-  }
-}
-
-function adjustLevelButtonsWidth() {
-  const swatchTotalWidth = $('.chroma-item').length * (30 + 10);
-  $('.level-button').css('width', swatchTotalWidth + 'px');
+  $('.view-box').html(`
+    <video controls autoplay class="img-fluid">
+      <source src="${videoUrl}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="mt-2">${displayName}</div>
+  `);
 }
