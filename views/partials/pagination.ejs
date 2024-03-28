@@ -1,0 +1,28 @@
+<nav aria-label="<%= aria_label %>">
+  <ul class="pagination justify-content-center">
+    <!-- handling previous page arrow -->
+    <% if (current_page > 1) { %>
+      <li class="page-item">
+        <a class="page-link" href="<%= page_url %>&page=<%= currentPage - 1 %>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    <% } %>
+    <!-- handling page numbers -->
+    <% for(let i = 1; i <= total_pages; i++) { %>
+      <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+        <a class="page-link" href="<%= page_url %>&page=<%= i %>">
+          <%= i %>
+        </a>
+      </li>
+    <% } %>
+    <!-- handling next page arrow -->
+    <% if (currentPage < totalPages) { %>
+      <li class="page-item">
+        <a class="page-link" href="<%= page_url %>&page=<%= currentPage + 1 %>" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</nav>
