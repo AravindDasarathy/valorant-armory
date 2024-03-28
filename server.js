@@ -46,7 +46,7 @@ app.get('/skins', async (req, res) => {
     );
     const skinsToExclude = [`Standard ${weaponName}`, 'Random Favorite Skin'];
     filteredSkins = weapon.skins.filter(
-      (skin) => !skinsToExclude.includes(skin.displayName)
+      (skin) => (!skinsToExclude.includes(skin.displayName) && skin.displayIcon)
     );
   }
 
@@ -54,7 +54,7 @@ app.get('/skins', async (req, res) => {
     const skinTheme = decodeURIComponent(req.query.skin_theme);
     const allSkins = await axios.get('https://valorant-api.com/v1/weapons/skins');
     filteredSkins = allSkins.data.data.filter(
-      (skin) => skin.displayName.includes(skinTheme)
+      (skin) => (skin.displayName.includes(skinTheme) && skin.displayIcon)
     );
   }
 
