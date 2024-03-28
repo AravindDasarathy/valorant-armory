@@ -11,41 +11,41 @@
 
     <section class="container vertical-center">
       <div class="row">
-        <!-- Grouping by Weapons -->
-        <div class="col-md-4">
-          <div class="card text-center large-category-card">
-            <img class="card-img-top" src="/images/skins-by-weapon.jpeg" alt="Group by Weapons">
-            <div class="card-body">
-              <h5 class="card-title">Group by Weapons</h5>
-              <p class="card-text">Explore skins organized by different weapons.</p>
-              <button href="/weapons" id="viewWeaponsButton" class="btn btn-primary">Browse Weapons</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Grouping by Skin Themes -->
-        <div class="col-md-4">
-          <div class="card text-center large-category-card">
-            <img class="card-img-top" src="/images/skins-by-variant.jpeg" alt="Group by Themes">
-            <div class="card-body">
-              <h5 class="card-title">Group by Skin Themes</h5>
-              <p class="card-text">Discover skins sorted by unique themes and styles.</p>
-              <a href="/themes" class="btn btn-primary">Browse Themes</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Display Everything -->
-        <div class="col-md-4">
-          <div class="card text-center large-category-card">
-            <img class="card-img-top" src="/images/all-skins.jpeg" alt="View All Skins">
-            <div class="card-body">
-              <h5 class="card-title">View All Skins</h5>
-              <p class="card-text">Scroll through our entire collection of skins.</p>
-              <a href="/skins" class="btn btn-primary">Browse All Skins</a>
-            </div>
-          </div>
-        </div>
+        <% const cards = [
+          {
+            image: {
+              src: '/images/skins-by-weapon.jpeg',
+              alt: 'Group by Weapons'
+            },
+            title: 'Group by Weapons',
+            description: 'Explore skins organized by different weapons.',
+            href: '/weapons',
+            buttonText: 'Browse Weapons'
+          },
+          {
+            image: {
+              src: '/images/skins-by-variant.jpeg',
+              alt: 'Group by Themes'
+            },
+            title: 'Group by Skin Themes',
+            description: 'Discover skins sorted by unique themes and styles.',
+            href: '/skin_themes',
+            buttonText: 'Browse Themes'
+          },
+          {
+            image: {
+              src: '/images/all-skins.jpeg',
+              alt: 'View All Skins'
+            },
+            title: 'View All Skins',
+            description: 'Scroll through our entire collection of skins.',
+            href: '/skins',
+            buttonText: 'Browse All Skins'
+          }
+        ];%>
+        <% cards.forEach(card => { %>
+          <%- include('../partials/cards/large.ejs', card) %>
+        <% }); %>
       </div>
     </section>
 
