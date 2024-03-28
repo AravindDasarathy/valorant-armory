@@ -9,6 +9,12 @@ $(document).ready(function () {
     window.location.href = `/skins?weapon_name=${weaponName}`;
   });
 
+  $('.skin-card').click(function() {
+    const skinTheme = $(this).data('skin-name');
+
+    window.location.href = `/skins?skin_theme=${skinTheme}`;
+  });
+
   $('.view-variants-btn').click(function () {
     const skinId = $(this).data('skin-id');
     $.ajax({
@@ -43,8 +49,10 @@ function populateVariantsModal(skin) {
 
   // Populate swatches
   skin.chromas.forEach((chroma) => {
-    modalContent += `
-      <img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1" style="width: 50px; cursor: pointer;" onclick="updateViewBoxWithFullRender('${chroma.fullRender}')">`;
+    if (chroma.swatch) {
+      modalContent += `
+        <img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1" style="width: 50px; cursor: pointer;" onclick="updateViewBoxWithFullRender('${chroma.fullRender}')">`;
+    }
   });
 
   modalContent += `</div><div class="d-flex flex-column align-items-center">`;
@@ -53,7 +61,9 @@ function populateVariantsModal(skin) {
   skin.levels.forEach((level, index) => {
     modalContent += `
       <button class="btn btn-primary my-1 level-button"
-        onclick="playLevelVideo('${level.streamedVideo}', '${level.displayName}')">
+        onclick="playLevelVideo('${level.streamedVideo}', '${
+      level.displayName
+    }')">
         Level ${index + 1}
       </button>`;
   });
@@ -65,7 +75,9 @@ function populateVariantsModal(skin) {
 }
 
 function updateViewBoxWithFullRender(fullRenderUrl) {
-  $('.view-box').html(`<img src="${fullRenderUrl}" class="img-fluid" alt="Skin Variant">`);
+  $('.view-box').html(
+    `<img src="${fullRenderUrl}" class="img-fluid" alt="Skin Variant">`
+  );
 }
 
 function playLevelVideo(videoUrl, displayName) {

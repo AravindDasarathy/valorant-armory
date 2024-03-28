@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <%- include('../partials/head.ejs') %>
+      <title>Skin Themes List</title>
+  </head>
+
+  <body>
+    <div class="bg-image"></div>
+    <div class="container">
+      <h1 class="text-center gallery-title">Skin Theme Gallery</h1>
+      <div class="row">
+        <% skinThemes.forEach(skinType=> { %>
+          <div class="col-md-3">
+            <div class="card text-center skin-card" data-skin-name="<%= skinType.name %>">
+              <img class="card-img-top" src="<%= skinType.image %>" alt="<%= skinType.name %>" />
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= skinType.name %>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+
+</html>
