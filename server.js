@@ -37,8 +37,13 @@ app.get('/skin_themes', async (req, res) => {
 
 app.get('/skins', async (req, res) => {
   let filteredSkins;
+  let title;
+  let queryName = '';
 
   if (req.query.weapon_name) {
+    title = 'Weapon Skins';
+    queryName = 'weapon_name';
+
     const weaponName = req.query.weapon_name;
     const weapons = await axios.get('https://valorant-api.com/v1/weapons');
     const weapon = weapons.data.data.find(
@@ -48,14 +53,19 @@ app.get('/skins', async (req, res) => {
     filteredSkins = weapon.skins.filter(
       (skin) => (!skinsToExclude.includes(skin.displayName) && skin.displayIcon)
     );
-  }
+  } else if (req.query.skin_theme) {
+    title = 'Skin Themes';
+    queryName = 'skin_theme';
 
-  if (req.query.skin_theme) {
     const skinTheme = decodeURIComponent(req.query.skin_theme);
     const allSkins = await axios.get('https://valorant-api.com/v1/weapons/skins');
     filteredSkins = allSkins.data.data.filter(
       (skin) => (skin.displayName.includes(skinTheme) && skin.displayIcon)
     );
+  } else {
+    title = 'All Skins';
+    const allSkins = await axios.get('https://valorant-api.com/v1/weapons/skins');
+    filteredSkins = allSkins.data.data.filter((skin) => skin.displayIcon);
   }
 
   const page = parseInt(req.query.page) || 1;
@@ -65,7 +75,8 @@ app.get('/skins', async (req, res) => {
   const totalPages = Math.ceil(filteredSkins.length / pageSize);
 
   res.render('pages/skins', {
-    type: req.query.weapon_name ? 'weapon' : 'skin_theme',
+    title,
+    query_name: queryName,
     name: req.query.weapon_name || req.query.skin_theme,
     currentPage: page,
     totalPages: totalPages,
@@ -85,6 +96,30 @@ app.get('/skins/:skin_id', async (req, res) => {
   }
 
   res.status(200).json(skinData);
+});
+
+app.get('/all_skins', async (req, res) => {
+  const allSkins = await axios.get('https://valorant-api.com/v1/weapons/skins');
+  const filteredSkins = allSkins.data.data.filter((skin) => skin.displayIcon);
+  const allSkinsList = filteredSkins.map((skin) => ({
+    name: skin.displayName,
+    image: skin.displayIcon,
+  }));
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 12;
+  const offset = (page - 1) * pageSize;
+  const paginatedSkins = filteredSkins.slice(offset, offset + pageSize);
+  const totalPages = Math.ceil(filteredSkins.length / pageSize);
+
+  res.render('pages/skins', {
+    title: 'All Skins',
+    query_name: 'all_skins',
+    name: req.query.weapon_name || req.query.skin_theme,
+    currentPage: page,
+    totalPages: totalPages,
+    skins: paginatedSkins,
+  });
 });
 
 app.listen(PORT);
