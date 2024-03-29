@@ -46,34 +46,48 @@ function pauseVideosInModal() {
 function populateVariantsModal(skin) {
   let modalContent = `
     <div class="view-box text-center mb-3">
-        <img src="${skin.displayIcon}" class="img-fluid" alt="${skin.displayName}">
+        <img src="${skin.displayIcon}" class="img-fluid" alt="${skin.displayName}" id="mainSkinImage">
     </div>
-    <div class="d-flex justify-content-center mb-3">
-  `;
+    <div class="d-flex justify-content-center mb-3" id="swatchesContainer">`;
 
   // Populate swatches
-  skin.chromas.forEach((chroma) => {
-    if (chroma.swatch && chroma.fullRender) {
-      modalContent += `
-        <img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1" style="width: 50px; cursor: pointer;" onclick="updateViewBoxWithFullRender('${chroma.fullRender}')">`;
-    }
+    skin.chromas.forEach((chroma, index) => {
+    modalContent += `<img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1 chroma-swatch" data-index="${index}" style="width: 50px; cursor: pointer;">`;
   });
 
-  modalContent += `</div><div class="d-flex flex-column align-items-center">`;
+  modalContent += `</div><div class="d-flex flex-column align-items-center" id="levelsContainer">`;
 
   // Populate levels
   skin.levels.forEach((level, index) => {
     if (level.streamedVideo) {
-      modalContent += `
-      <button class="btn btn-primary my-1 level-button"
-        onclick="playLevelVideo('${level.streamedVideo}', '${level.displayName}')">
-        Level ${index + 1}
-      </button>`;
+      modalContent += `<button class="btn btn-primary my-1 level-button" data-index="${index}">Level ${index + 1}</button>`;
     }
   });
 
   modalContent += `</div>`;
   $('#variantsModal .modal-body').html(modalContent);
+
+  attachSwatchClickListeners(skin.chromas);
+  attachLevelButtonClickListeners(skin.levels);
+}
+
+function attachSwatchClickListeners(chromas) {
+  $('.chroma-swatch').click(function() {
+    // Fetching the index than the data itself as it gives more security (ex: preventing XSS)
+    const index = $(this).data('index');
+    const fullRenderUrl = chromas[index].fullRender;
+
+    $('#mainSkinImage').attr('src', fullRenderUrl);
+  });
+}
+
+function attachLevelButtonClickListeners(levels) {
+  $('.level-button').click(function() {
+    const index = $(this).data('index');
+    const level = levels[index];
+
+    playLevelVideo(level.streamedVideo, level.displayName);
+  });
 }
 
 function updateViewBoxWithFullRender(fullRenderUrl) {
