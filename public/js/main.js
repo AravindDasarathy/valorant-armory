@@ -3,18 +3,6 @@ $(document).ready(function () {
     window.location.href = '/weapons';
   });
 
-  $('.weapon-card').click(function () {
-    const weaponName = $(this).data('weapon-name');
-
-    window.location.href = `/skins?weapon_name=${weaponName}`;
-  });
-
-  $('.skin-card').click(function() {
-    const skinTheme = $(this).data('skin-name');
-
-    window.location.href = `/skins?skin_theme=${skinTheme}`;
-  });
-
   $('#searchForm').on('submit', function(event) {
     event.preventDefault();
 
