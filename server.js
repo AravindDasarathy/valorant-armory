@@ -10,6 +10,7 @@ const app = express();
 const PORT = 8080;
 
 app.set('view engine', 'ejs');
+app.set('view cache', true);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -65,8 +66,6 @@ app.get('/skins', async (req, res) => {
   let filteredSkins;
   let title;
   let queryName = '';
-
-  console.log(req.originalUrl);
 
   if (req.query.weapon_name) {
     title = 'Weapon Skins';
