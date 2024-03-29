@@ -22,7 +22,20 @@ app.get('/weapons', async (req, res) => {
     image: weapon.displayIcon,
   }));
 
-  res.render('pages/weapons', { weapons: weaponsList });
+  if (req.query.key) {
+    const filteredWeapons = weaponsList.filter(weapon =>
+      weapon.name.toLowerCase().includes(req.query.key.toLowerCase()));
+
+    return res.render('pages/weapons', {
+      current_path: req.originalUrl,
+      weapons: filteredWeapons
+    });
+  }
+
+  res.render('pages/weapons', {
+    current_path: req.originalUrl,
+    weapons: weaponsList
+  });
 });
 
 app.get('/skin_themes', async (req, res) => {
@@ -32,13 +45,28 @@ app.get('/skin_themes', async (req, res) => {
     image: skinType.displayIcon,
   }));
 
-  res.render('pages/skin_themes', { skinThemes: skinThemesList });
+  if (req.query.key) {
+    const filteredSkinThemes = skinThemesList.filter(skinTheme =>
+      skinTheme.name.toLowerCase().includes(req.query.key.toLowerCase()));
+
+    return res.render('pages/skin_themes', {
+      current_path: req.originalUrl,
+      skinThemes: filteredSkinThemes
+    });
+  }
+
+  res.render('pages/skin_themes', {
+    current_path: req.originalUrl,
+    skinThemes: skinThemesList
+  });
 });
 
 app.get('/skins', async (req, res) => {
   let filteredSkins;
   let title;
   let queryName = '';
+
+  console.log(req.originalUrl);
 
   if (req.query.weapon_name) {
     title = 'Weapon Skins';
@@ -68,6 +96,11 @@ app.get('/skins', async (req, res) => {
     filteredSkins = allSkins.data.data.filter((skin) => skin.displayIcon);
   }
 
+  if (req.query.key) {
+    filteredSkins = filteredSkins.filter(skin =>
+      skin.displayName.toLowerCase().includes(req.query.key.toLowerCase()));
+  }
+
   const page = parseInt(req.query.page) || 1;
   const pageSize = 12;
   const offset = (page - 1) * pageSize;
@@ -77,6 +110,7 @@ app.get('/skins', async (req, res) => {
   res.render('pages/skins', {
     title,
     query_name: queryName,
+    current_path: req.originalUrl,
     name: req.query.weapon_name || req.query.skin_theme,
     currentPage: page,
     totalPages: totalPages,
@@ -101,10 +135,11 @@ app.get('/skins/:skin_id', async (req, res) => {
 app.get('/all_skins', async (req, res) => {
   const allSkins = await axios.get('https://valorant-api.com/v1/weapons/skins');
   const filteredSkins = allSkins.data.data.filter((skin) => skin.displayIcon);
-  const allSkinsList = filteredSkins.map((skin) => ({
-    name: skin.displayName,
-    image: skin.displayIcon,
-  }));
+
+  if (req.query.key) {
+    filteredSkins = filteredSkins.filter(skin =>
+      skin.displayName.toLowerCase().includes(req.query.key.toLowerCase()));
+  }
 
   const page = parseInt(req.query.page) || 1;
   const pageSize = 12;
@@ -115,6 +150,7 @@ app.get('/all_skins', async (req, res) => {
   res.render('pages/skins', {
     title: 'All Skins',
     query_name: 'all_skins',
+    current_path: req.originalUrl,
     name: req.query.weapon_name || req.query.skin_theme,
     currentPage: page,
     totalPages: totalPages,

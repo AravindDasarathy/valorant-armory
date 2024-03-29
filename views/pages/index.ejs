@@ -8,46 +8,49 @@
 
   <body>
     <div class="bg-image"></div>
+    <div class="d-flex flex-column justify-content-evenly min-vh-100">
+      <%- include('../partials/search.ejs', { url: '/skins' }) %>
 
-    <section class="container vertical-center">
-      <div class="row">
-        <% const cards = [
-          {
-            image: {
-              src: '/images/skins-by-weapon.jpeg',
-              alt: 'Group by Weapons'
+      <section class="container">
+        <div class="row">
+          <% const cards = [
+            {
+              image: {
+                src: '/images/skins-by-weapon.jpeg',
+                alt: 'Group by Weapons'
+              },
+              title: 'Group by Weapons',
+              description: 'Explore skins organized by different weapons.',
+              href: '/weapons',
+              buttonText: 'Browse Weapons'
             },
-            title: 'Group by Weapons',
-            description: 'Explore skins organized by different weapons.',
-            href: '/weapons',
-            buttonText: 'Browse Weapons'
-          },
-          {
-            image: {
-              src: '/images/skins-by-variant.jpeg',
-              alt: 'Group by Themes'
+            {
+              image: {
+                src: '/images/skins-by-variant.jpeg',
+                alt: 'Group by Themes'
+              },
+              title: 'Group by Skin Themes',
+              description: 'Discover skins sorted by unique themes and styles.',
+              href: '/skin_themes',
+              buttonText: 'Browse Themes'
             },
-            title: 'Group by Skin Themes',
-            description: 'Discover skins sorted by unique themes and styles.',
-            href: '/skin_themes',
-            buttonText: 'Browse Themes'
-          },
-          {
-            image: {
-              src: '/images/all-skins.jpeg',
-              alt: 'View All Skins'
-            },
-            title: 'View All Skins',
-            description: 'Scroll through our entire collection of skins.',
-            href: '/skins',
-            buttonText: 'Browse All Skins'
-          }
-        ];%>
-        <% cards.forEach(card => { %>
-          <%- include('../partials/cards/category.ejs', card) %>
-        <% }); %>
-      </div>
-    </section>
+            {
+              image: {
+                src: '/images/all-skins.jpeg',
+                alt: 'View All Skins'
+              },
+              title: 'View All Skins',
+              description: 'Scroll through our entire collection of skins.',
+              href: '/skins',
+              buttonText: 'Browse All Skins'
+            }
+          ];%>
+          <% cards.forEach(card => { %>
+            <%- include('../partials/cards/category.ejs', card) %>
+          <% }); %>
+        </div>
+      </section>
+    </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-3.7.1.min.js"></script>

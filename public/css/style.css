@@ -8,13 +8,6 @@ html, body {
   min-height: 100vh;
 }
 
-.vertical-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
 
 .bg-image {
   position: fixed;
@@ -64,7 +57,7 @@ html, body {
   color: white;
   text-shadow: 2px 2px 4px #000000;
   margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .modal-header .close {
