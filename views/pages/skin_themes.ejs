@@ -12,17 +12,14 @@
       <h1 class="text-center gallery-title">Skin Theme Gallery</h1>
       <div class="row">
         <% skinThemes.forEach(skinType=> { %>
-          <div class="col-md-3">
-            <div class="card text-center skin-card" data-skin-name="<%= skinType.name %>">
-              <img class="card-img-top" src="<%= skinType.image %>" alt="<%= skinType.name %>" />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= skinType.name %>
-                </h5>
-              </div>
-            </div>
-          </div>
-          <% }); %>
+          <%- include('../partials/cards/base.ejs', {
+            className: 'skin-card',
+            data_attr_name: 'skin-name',
+            data_attr_val: skinType.name,
+            displayIcon: skinType.image,
+            displayName: skinType.name
+          }) %>
+        <% }); %>
       </div>
     </div>
     <script src="/js/bootstrap.bundle.min.js"></script>

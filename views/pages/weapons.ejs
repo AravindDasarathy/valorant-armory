@@ -12,17 +12,14 @@
       <h1 class="text-center gallery-title">Weapons Gallery</h1>
       <div class="row">
         <% weapons.forEach(weapon=> { %>
-          <div class="col-md-3">
-            <div class="card text-center weapon-card" data-weapon-name="<%= weapon.name %>">
-              <img class="card-img-top" src="<%= weapon.image %>" alt="<%= weapon.name %>" />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= weapon.name %>
-                </h5>
-              </div>
-            </div>
-          </div>
-          <% }); %>
+          <%- include('../partials/cards/base.ejs', {
+            className: 'weapon-card',
+            data_attr_name: 'weapon-name',
+            data_attr_val: weapon.name,
+            displayIcon: weapon.image,
+            displayName: weapon.name
+          }) %>
+        <% }); %>
       </div>
     </div>
     <script src="/js/bootstrap.bundle.min.js"></script>
