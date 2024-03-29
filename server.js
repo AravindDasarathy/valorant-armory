@@ -65,7 +65,8 @@ app.get('/skins', async (req, res) => {
   const totalPages = Math.ceil(filteredSkins.length / pageSize);
 
   res.render('pages/skins', {
-    weapon_name: req.query.weapon_name || req.query.skin_theme,
+    type: req.query.weapon_name ? 'weapon' : 'skin_theme',
+    name: req.query.weapon_name || req.query.skin_theme,
     currentPage: page,
     totalPages: totalPages,
     skins: paginatedSkins,
