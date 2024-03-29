@@ -15,6 +15,21 @@ $(document).ready(function () {
     window.location.href = `/skins?skin_theme=${skinTheme}`;
   });
 
+  $('#searchForm').on('submit', function(event) {
+    event.preventDefault();
+
+    const baseUrl = $(this).attr('action').split('?')[0];
+    const existingParams = new URLSearchParams(window.location.search);
+    const searchKey = $('input[name="key"]').val();
+
+    existingParams.set('key', searchKey);
+
+    const newAction = `${baseUrl}?${existingParams.toString()}`;
+
+    window.location.href = newAction;
+  });
+
+
   $('.view-variants-btn').click(function () {
     const skinId = $(this).data('skin-id');
     $.ajax({
