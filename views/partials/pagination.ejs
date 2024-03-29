@@ -1,25 +1,44 @@
 <nav aria-label="<%= aria_label %>">
   <ul class="pagination justify-content-center">
-    <!-- handling previous page arrow -->
     <% if (current_page > 1) { %>
       <li class="page-item">
-        <a class="page-link" href="<%= page_url %>&page=<%= currentPage - 1 %>" aria-label="Previous">
+        <a class="page-link" href="<%= page_url %>&page=<%= current_page - 1 %>" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
     <% } %>
-    <!-- handling page numbers -->
-    <% for(let i = 1; i <= total_pages; i++) { %>
-      <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-        <a class="page-link" href="<%= page_url %>&page=<%= i %>">
-          <%= i %>
-        </a>
+
+    <%
+    // Determining range for pagination links for large data sets
+    const numLinks = 5;
+    let start = Math.max(current_page - Math.floor(numLinks / 2), 1);
+    let end = Math.min(start + numLinks - 1, total_pages);
+    // if current page is 7,then [1 .... 5, 6, 7, 8, 9 .... 70]
+
+    if (end === total_pages) {
+      // [1 .... 66, 67, 68, 69, 70]
+      start = Math.max(end - numLinks + 1, 1);
+    }
+
+    if (start > 1) { %>
+      <li class="page-item"><a class="page-link" href="<%= page_url %>&page=1">1</a></li>
+      <li class="page-item disabled"><span class="page-link">...</span></li>
+    <% }
+
+    for (let i = start; i <= end; i++) { %>
+      <li class="page-item <%= i === current_page ? 'active' : '' %>">
+        <a class="page-link" href="<%= page_url %>&page=<%= i %>"><%= i %></a>
       </li>
+    <% }
+
+    if (end < total_pages) { %>
+      <li class="page-item disabled"><span class="page-link">...</span></li>
+      <li class="page-item"><a class="page-link" href="<%= page_url %>&page=<%= total_pages %>"><%= total_pages %></a></li>
     <% } %>
-    <!-- handling next page arrow -->
-    <% if (currentPage < totalPages) { %>
+
+    <% if (current_page < total_pages) { %>
       <li class="page-item">
-        <a class="page-link" href="<%= page_url %>&page=<%= currentPage + 1 %>" aria-label="Next">
+        <a class="page-link" href="<%= page_url %>&page=<%= current_page + 1 %>" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
