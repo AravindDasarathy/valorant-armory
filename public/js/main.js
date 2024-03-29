@@ -1,47 +1,47 @@
-$(document).ready(function () {
-  $('#viewWeaponsButton').click(function () {
-    window.location.href = '/weapons';
-  });
-
-  $('#searchForm').on('submit', function(event) {
-    event.preventDefault();
-
-    const baseUrl = $(this).attr('action').split('?')[0];
-    const existingParams = new URLSearchParams(window.location.search);
-    const searchKey = $('input[name="key"]').val();
-
-    existingParams.set('key', searchKey);
-
-    const newAction = `${baseUrl}?${existingParams.toString()}`;
-
-    window.location.href = newAction;
-  });
-
-
-  $('.view-variants-btn').click(function () {
-    const skinId = $(this).data('skin-id');
-    $.ajax({
-      url: `http://localhost:8080/skins/${skinId}`,
-      success: function (skinDetails) {
-        populateVariantsModal(skinDetails);
-        $('#variantsModal').modal('show');
-      },
-      error: function () {
-        alert('Failed to fetch skin details');
-      },
-    });
-  });
-
-  $('.close-modal-button').click(function () {
-    $('#variantsModal').modal('hide');
-  });
-
-  $('#variantsModal').on('hide.bs.modal', function () {
-    $('video', this).each(function () {
-      this.pause();
-    });
-  });
+$(document).ready(function() {
+  $('#searchForm').on('submit', handleSearchFormSubmission);
+  $('.view-variants-btn').click(fetchAndRenderSkinVariants);
+  $('.close-modal-button').click(hideVariantsModal);
+  $('#variantsModal').on('hide.bs.modal', pauseVideosInModal);
 });
+
+function handleSearchFormSubmission(event) {
+  event.preventDefault();
+
+  const baseUrl = $(this).attr('action').split('?')[0];
+  const existingParams = new URLSearchParams(window.location.search);
+  const searchKey = $('input[name="key"]').val();
+
+  existingParams.set('key', searchKey);
+
+  const newAction = `${baseUrl}?${existingParams.toString()}`;
+
+  window.location.href = newAction;
+}
+
+function fetchAndRenderSkinVariants() {
+  const skinId = $(this).data('skin-id');
+  $.ajax({
+    url: `http://localhost:8080/skins/${skinId}`,
+    success: function (skinDetails) {
+      populateVariantsModal(skinDetails);
+      $('#variantsModal').modal('show');
+    },
+    error: function () {
+      alert('Failed to fetch skin details');
+    },
+  });
+}
+
+function hideVariantsModal() {
+  $('#variantsModal').modal('hide');
+}
+
+function pauseVideosInModal() {
+  $('video', this).each(function () {
+    this.pause();
+  });
+}
 
 function populateVariantsModal(skin) {
   let modalContent = `
