@@ -16,9 +16,7 @@
       <div class="row mt-2">
         <% weapons.forEach(weapon=> { %>
           <%- include('../partials/cards/base.ejs', {
-            className: 'weapon-card',
-            data_attr_name: 'weapon-name',
-            data_attr_val: weapon.name,
+            link: `/skins?weapon_name=${weapon.name}`,
             displayIcon: weapon.image,
             displayName: weapon.name
           }) %>

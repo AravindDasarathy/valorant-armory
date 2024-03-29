@@ -16,9 +16,7 @@
       <div class="row">
         <% skinThemes.forEach(skinType=> { %>
           <%- include('../partials/cards/base.ejs', {
-            className: 'skin-card',
-            data_attr_name: 'skin-name',
-            data_attr_val: skinType.name,
+            link: `/skins?skin_theme=${skinType.name}`,
             displayIcon: skinType.image,
             displayName: skinType.name
           }) %>
