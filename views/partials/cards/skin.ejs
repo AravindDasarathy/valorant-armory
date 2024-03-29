@@ -1,0 +1,14 @@
+<div class="col-md-4 mb-4">
+  <div class="card">
+    <img src="<%= skin.displayIcon %>" alt="<%= skin.displayName %>" class="card-img-top" />
+    <div class="card-body text-center">
+      <h5 class="card-title">
+        <%= skin.displayName %>
+      </h5>
+      <button type="button" class="btn btn-primary view-variants-btn" data-skin-id="<%= skin.uuid %>"
+        data-toggle="modal" data-target="#variantsModal">
+        <%= button_text %>
+      </button>
+    </div>
+  </div>
+</div>
