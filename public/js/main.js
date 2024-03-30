@@ -22,7 +22,7 @@ function handleSearchFormSubmission(event) {
 function fetchAndRenderSkinVariants() {
   const skinId = $(this).data('skin-id');
   $.ajax({
-    url: `http://localhost:8080/skins/${skinId}`,
+    url: `/skins/${skinId}`,
     success: function (skinDetails) {
       populateVariantsModal(skinDetails);
       $('#variantsModal').modal('show');
