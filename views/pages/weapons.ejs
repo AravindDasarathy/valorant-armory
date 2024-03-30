@@ -11,7 +11,7 @@
     <div class="container">
       <h1 class="text-center gallery-title">Weapons Gallery</h1>
 
-      <%- include('../partials/search.ejs', { url: current_path }) %>
+      <%- include('../partials/topbar.ejs', { search_url: current_path }) %>
 
       <div class="row mt-2">
         <% weapons.forEach(weapon=> { %>

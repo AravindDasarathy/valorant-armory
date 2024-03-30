@@ -9,8 +9,7 @@
   <body>
     <div class="bg-image"></div>
     <div class="d-flex flex-column justify-content-evenly min-vh-100">
-      <%- include('../partials/search.ejs', { url: '/skins' }) %>
-
+      <%- include('../partials/topbar.ejs', { search_url: '/skins' }) %>
       <section class="container">
         <div class="row">
           <% const cards = [
