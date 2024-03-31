@@ -1,23 +1,30 @@
-import {jest} from '@jest/globals'
+import { jest } from '@jest/globals';
 import request from 'supertest';
 
+const setupMockedWeapons = () => {
+  const mockedWeapons = [
+    { displayName: 'Vandal', displayIcon: '/random/image' },
+    { displayName: 'Phantom', displayIcon: '/random/image' }
+  ];
+
+  jest.unstable_mockModule('../utils/weapons.js', () => ({
+    fetchWeapons: jest.fn().mockResolvedValue(mockedWeapons)
+  }));
+
+  return mockedWeapons;
+};
+
 describe('Weapons Page', () => {
-  beforeEach(() => {
+  let app;
+  let mockedWeapons;
+
+  beforeEach(async () => {
     jest.clearAllMocks();
+    mockedWeapons = setupMockedWeapons();
+    app = (await import('../app.js')).default;
   });
 
   test('it loads successfully with a status code of 200', async () => {
-    const mockedWeapons = [
-      { displayName: 'Vandal', displayIcon: '/random/image' },
-      { displayName: 'Phantom', displayIcon: '/random/image' }
-    ];
-
-    jest.unstable_mockModule('../utils/weapons.js', () => ({
-      fetchWeapons: jest.fn().mockResolvedValue(mockedWeapons)
-    }));
-
-    const { default: app } = await import('../app.js');
-
     const response = await request(app).get('/weapons');
 
     expect(response.statusCode).toBe(200);
@@ -25,17 +32,6 @@ describe('Weapons Page', () => {
   });
 
   test('it renders weapon cards based on the weapons data', async () => {
-    const mockedWeapons = [
-      { displayName: 'Vandal', displayIcon: '/random/image' },
-      { displayName: 'Phantom', displayIcon: '/random/image' }
-    ];
-
-    jest.unstable_mockModule('../utils/weapons.js', () => ({
-      fetchWeapons: jest.fn().mockResolvedValue(mockedWeapons)
-    }));
-
-    const { default: app } = await import('../app.js');
-
     const response = await request(app).get('/weapons');
 
     mockedWeapons.forEach(weapon => {
