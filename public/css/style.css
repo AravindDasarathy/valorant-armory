@@ -64,8 +64,9 @@ html, body {
   margin: -1rem -1rem -1rem auto;
 }
 
-.chroma-item img {
-  width: 30px;
+.chroma-item {
+  width: 50px;
+  cursor: pointer;
 }
 
 .modal-header {
@@ -77,4 +78,9 @@ html, body {
   right: 1rem;
   top: 1rem;
   z-index: 2;
+}
+
+.menu-button {
+  width: 24px;
+  height: 24px;
 }

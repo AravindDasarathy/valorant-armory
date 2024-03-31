@@ -52,7 +52,7 @@ function populateVariantsModal(skin) {
 
   // Populate swatches
     skin.chromas.forEach((chroma, index) => {
-    modalContent += `<img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1 chroma-swatch" data-index="${index}" style="width: 50px; cursor: pointer;">`;
+    modalContent += `<img src="${chroma.swatch}" alt="${chroma.displayName}" class="img-thumbnail mx-1 chroma-swatch chroma-item" data-index="${index}">`;
   });
 
   modalContent += `</div><div class="d-flex flex-column align-items-center" id="levelsContainer">`;
